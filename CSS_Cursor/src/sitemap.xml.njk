@@ -1,0 +1,21 @@
+---
+permalink: "/sitemap.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- set baseUrl = env.SITE_URL or site.url -%}
+  {%- for item in collections.all -%}
+    {%- if item.url
+      and (item.url != "/admin/")
+      and (item.url != "/sitemap.xml")
+      and (item.url != "/robots.txt")
+      and (item.url != "/404/")
+    -%}
+  <url>
+    <loc>{{ baseUrl }}{{ item.url }}</loc>
+  </url>
+    {%- endif -%}
+  {%- endfor -%}
+</urlset>
+

@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+---
+
+<section class="section">
+  <div class="section__head">
+    <div>
+      <div class="kicker">{{ categoryName }}</div>
+      <h1>{{ productName }}</h1>
+      {% if metaDescription %}<p>{{ metaDescription }}</p>{% endif %}
+    </div>
+    <a class="btn" href="/catalog/{{ categorySlug }}/">К разделу</a>
+  </div>
+
+  <div class="panel panel--padded" style="margin-bottom: 14px;">
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; justify-content:space-between;">
+      <div>
+        {% if sizes %}<div class="chip">Размеры/пометки: {{ sizes }}</div>{% endif %}
+        {% if badges and badges.length %}
+          <div class="badges">
+            {% for b in badges %}<span class="badge">{{ b }}</span>{% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="price" style="font-size: 22px;">
+        {% if oldPrice %}<s>{{ oldPrice }}</s>{% endif %}
+        {{ price }}
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    {{ content | safe }}
+  </div>
+</section>
+

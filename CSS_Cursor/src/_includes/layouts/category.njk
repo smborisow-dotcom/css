@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+---
+
+<section class="section">
+  <div class="section__head">
+    <div>
+      <h1>{{ categoryName }}</h1>
+      {% if metaDescription %}<p>{{ metaDescription }}</p>{% endif %}
+    </div>
+    <a class="btn" href="/catalog/">Все категории</a>
+  </div>
+
+  <div class="list">
+    {% set items = (collections.product | where("data.categorySlug", categorySlug) | sortBy("data.productName")) %}
+    {% for p in items %}
+      <div class="productRow">
+        <div>
+          <a href="{{ p.url }}" class="productRow__title">{{ p.data.productName }}</a>
+          {% if p.data.sizes %}<div class="productRow__sub">{{ p.data.sizes }}</div>{% endif %}
+          {% if p.data.badges and p.data.badges.length %}
+            <div class="badges">
+              {% for b in p.data.badges %}<span class="badge">{{ b }}</span>{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="price">
+          {% if p.data.oldPrice %}<s>{{ p.data.oldPrice }}</s>{% endif %}
+          {{ p.data.price }}
+        </div>
+      </div>
+    {% endfor %}
+
+    {% if items.length == 0 %}
+      <div class="content">
+        <p>Товары для этого раздела будут отображаться после импорта контента.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if content and content | trim %}
+  <section class="section">
+    <div class="content">
+      {{ content | safe }}
+    </div>
+  </section>
+{% endif %}
+

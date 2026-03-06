@@ -1,0 +1,99 @@
+local_backend: true
+
+backend:
+  # DecapBridge uses the git-gateway backend. After you create a site in DecapBridge,
+  # copy the generated backend block from their dashboard and replace this section.
+  # Docs: https://decapbridge.com/docs/getting-started
+  name: git-gateway
+  branch: main
+
+media_folder: "src/uploads"
+public_folder: "/uploads"
+
+site_url: "https://www.specspb.com"
+display_url: "https://www.specspb.com"
+
+collections:
+  - name: "categories"
+    label: "Категории"
+    label_singular: "Категория"
+    folder: "src/catalog"
+    create: false
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    filter: { field: "tags", value: "category" }
+    fields:
+      - { label: "Теги", name: "tags", widget: "list", default: ["category"] }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int" }
+      - { label: "Название категории (H1)", name: "categoryName", widget: "string" }
+      - { label: "Slug категории", name: "categorySlug", widget: "string" }
+      - { label: "Старый p (legacy)", name: "legacyP", widget: "number", required: false, value_type: "int" }
+      - { label: "Title страницы", name: "title", widget: "string" }
+      - { label: "Meta title", name: "metaTitle", widget: "string" }
+      - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+      - { label: "Текст внизу категории (SEO)", name: "body", widget: "markdown", required: false }
+
+  - name: "products"
+    label: "Товары"
+    label_singular: "Товар"
+    folder: "src/products"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.legacyP}}-{{slug}}"
+    fields:
+      - { label: "Теги", name: "tags", widget: "list", default: ["product"] }
+      - { label: "Старый p (legacy)", name: "legacyP", widget: "number", value_type: "int" }
+      - { label: "Название товара (H1)", name: "productName", widget: "string" }
+      - { label: "Slug товара", name: "productSlug", widget: "string" }
+      - { label: "Категория (H1 раздела)", name: "categoryName", widget: "string" }
+      - { label: "Slug категории", name: "categorySlug", widget: "string" }
+      - { label: "Цена", name: "price", widget: "string", required: false }
+      - { label: "Старая цена", name: "oldPrice", widget: "string", required: false }
+      - { label: "Размеры/пометки (коротко)", name: "sizes", widget: "string", required: false }
+      - label: "Бейджи"
+        name: "badges"
+        widget: "list"
+        required: false
+      - { label: "Title страницы", name: "title", widget: "string" }
+      - { label: "Meta title", name: "metaTitle", widget: "string" }
+      - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+      - { label: "Контент (описание/характеристики)", name: "body", widget: "markdown", required: false }
+
+  - name: "pages"
+    label: "Страницы"
+    files:
+      - label: "О компании"
+        name: "about"
+        file: "src/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Meta title", name: "metaTitle", widget: "string" }
+          - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "Информация клиентам"
+        name: "info"
+        file: "src/info.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Meta title", name: "metaTitle", widget: "string" }
+          - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "Вакансии"
+        name: "jobs"
+        file: "src/jobs.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Meta title", name: "metaTitle", widget: "string" }
+          - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "Контакты"
+        name: "contacts"
+        file: "src/contacts.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Meta title", name: "metaTitle", widget: "string" }
+          - { label: "Meta description", name: "metaDescription", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+
